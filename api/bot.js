@@ -3,15 +3,15 @@ const chatHistories = new Map();
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(200).json({ status: 'Bot is running - Agnes AI connected' });
+    return res.status(200).json({ status: 'Bot is running - Connected' });
   }
 
   const { BOT_TOKEN, API_KEY, API_BASE, MODEL_NAME } = process.env;
 
-  // 严格对齐官方文档的根路径
-  const IMAGE_API_BASE = 'https://apihub.agnes-ai.com/v1';
-  const IMAGE_API_KEY = 'sk-ozDsndDe9QaPCRibCGCpsx671obGruY9KBCThyWk8KvRPYBs';
-  const IMAGE_MODEL_NAME = 'agnes-image-2.5-flash';
+  // 已更新为你指定的生图 API 配置
+  const IMAGE_API_BASE = 'https://apinebula.ai/v1';
+  const IMAGE_API_KEY = 'sk-fT5ZfTiQ5wVV5Gm9t2ridRh8yFbFFsBOQY9keyfNIrWni0UT';
+  const IMAGE_MODEL_NAME = 'gemini-3.1-flash-image';
 
   if (!BOT_TOKEN || !API_KEY || !API_BASE || !MODEL_NAME) {
     console.error('Missing required chat environment variables.');
@@ -314,8 +314,8 @@ export default async function handler(req, res) {
       const aiData = await aiResponse.json();
       
       if (!aiResponse.ok) {
-        console.error('Agnes AI Error Response:', aiData);
-        throw new Error(aiData.error?.message || `Agnes AI API error: ${aiResponse.status}`);
+        console.error('API Error Response:', aiData);
+        throw new Error(aiData.error?.message || `API error: ${aiResponse.status}`);
       }
 
       const replyText = aiData.choices?.[0]?.message?.content || '唔……主人，我暂时没有通过 Google 搜索到对应的有效图片呢，要不换个关键词或换张图发给我吧~ (＞﹏＜)';
